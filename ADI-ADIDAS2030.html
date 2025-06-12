@@ -1,0 +1,543 @@
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Treinamento ADI – Módulos</title>
+    <style>
+        /* Estilos CSS (mantidos os mesmos do anterior) */
+        body {
+            font-family: 'Adidas Brand Text', sans-serif;
+            background-color: #000;
+            color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .logo-placeholder {
+            width: 150px;
+            height: 100px;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8em;
+            color: #999;
+            overflow: hidden;
+        }
+        .logo-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        h1, h2 {
+            color: #00FFFF;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #00FFFF;
+            border-radius: 8px;
+            background-color: #000;
+            color: #FFF;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        .btn {
+            background-color: #00FFFF;
+            color: #000;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        .btn:hover {
+            background-color: #00dcdc;
+            transform: translateY(-2px);
+        }
+        /* Todos os módulos/páginas começam escondidos, exceto o login */
+        #boostModule, #supernovaModule, #simulationModule, #masterPage, #simulationResult, #simulacaoAtendimentoPage {
+            display: none;
+            margin-top: 30px; /* Adiciona um espaço visual superior */
+            border-top: 2px solid #00FFFF; /* Linha divisória */
+            padding-top: 30px; /* Espaço para o conteúdo após a linha */
+        }
+        .question-container {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .question-container p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .question-container label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        .question-container label:hover {
+            background-color: #555;
+        }
+        .question-container input[type="radio"] {
+            margin-right: 10px;
+        }
+        #masterResults {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        #masterResults li {
+            background-color: #333;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #00FFFF;
+        }
+        #masterResults li strong {
+            color: #00FFFF;
+        }
+        .feedback-correct {
+            color: #00FF00;
+            font-weight: bold;
+        }
+        .feedback-incorrect {
+            color: #FF0000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginPage">
+        <div class="logo-placeholder">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1200px-Adidas_Logo.svg.png" alt="Sua Logo Adidas Futurista">
+        </div>
+        <h1>Bem-vindo(a) ao Treinamento ADI</h1>
+        <h2>ADI - Adidas 2030</h2>
+        <p>Por favor, insira seu nome e senha para iniciar:</p>
+        <input type="text" id="userName" placeholder="" autocomplete="off">
+        <input type="password" id="userPass" placeholder="Sua senha">
+        <button class="btn" onclick="startTraining()">Entrar</button>
+    </div>
+
+    <div class="container" id="boostModule">
+        <button class="btn" onclick="logout()">Sair / Trocar Usuário</button>
+        <h2>Módulo 1: BOOST – O que é o BOOST?</h2>
+        <p>Aprenda tudo sobre a tecnologia BOOST da Adidas neste treinamento fundamental!</p>
+        <a href="https://youtu.be/TtGVFMYGFZg?si=2Z_z7BqQqsxXi4GW" target="_blank" class="btn">Abrir Material de Estudo (YouTube)</a>
+        <button class="btn" onclick="startSimulation()">Iniciar Simulação ADI (Quiz)</button>
+        <button class="btn" onclick="goToSimulacaoAtendimentoPage()">Treinar com ADI - Simulação de Atendimento</button>
+        <button class="btn" id="masterAccessButton" style="display:none;" onclick="goToMasterPage()">Acessar Área Master</button>
+        <button class="btn" onclick="goToSupernovaModule()">Próximo Treinamento (Supernova)</button> </div>
+
+    <div class="container" id="supernovaModule">
+        <button class="btn" onclick="logout()">Sair / Trocar Usuário</button>
+        <h2>Módulo 2: Supernova - Maratona do Rio</h2>
+        <p>Acesse o aplicativo do treinamento completo sobre a família Supernova!</p>
+        <a href="https://app.jotform.com/251624037826659" target="_blank" class="btn">Acessar Treinamento Supernova App</a>
+        <button class="btn" onclick="goToBoostModule()">Voltar ao Treinamento Anterior</button> <button class="btn" id="masterAccessButtonSupernova" style="display:none;" onclick="goToMasterPage()">Acessar Área Master</button>
+        </div>
+
+    <div class="container" id="simulationModule">
+        <h2>Simulação ADI - Módulo BOOST</h2>
+        <form id="quizForm">
+            <div class="question-container">
+                <p>1. Qual é o principal benefício da tecnologia BOOST em um calçado Adidas?</p>
+                <label><input type="radio" name="q1" value="a"> A) Maior durabilidade da sola.</label>
+                <label><input type="radio" name="q1" value="b"> B) Excelente retorno de energia e amortecimento.</label>
+                <label><input type="radio" name="q1" value="c"> C) Redução significativa do peso do tênis.</label>
+                <label><input type="radio" name="q1" value="d"> D) Maior ventilação para os pés.</label>
+                <div id="feedback-q1"></div>
+            </div>
+
+            <div class="question-container">
+                <p>2. De que material é composta a entressola BOOST?</p>
+                <label><input type="radio" name="q2" value="a"> A) Borracha de alta densidade.</label>
+                <label><input type="radio" name="q2" value="b"> B) Espuma de EVA tradicional.</label>
+                <label><input type="radio" name="q2" value="c"> C) Pequenas cápsulas de TPU expandido.</label>
+                <label><input type="radio" name="q2" value="d"> D) Silicone líquido.</label>
+                <div id="feedback-q2"></div>
+            </div>
+
+            <div class="question-container">
+                <p>3. Qual é a principal característica visual da entressola BOOST?</p>
+                <label><input type="radio" name="q3" value="a"> A) Superfície lisa e uniforme.</label>
+                <label><input type="radio" name="q3" value="b"> B) Aparência granulada, similar a isopor.</label>
+                <label><input type="radio" name="q3" value="c"> C) Cor sólida preta.</label>
+                <label><input type="radio" name="q3" value="d"> D) Textura de gel.</label>
+                <div id="feedback-q3"></div>
+            </div>
+
+            <div class="question-container">
+                <p>4. Em que ano a tecnologia BOOST foi lançada pela Adidas?</p>
+                <label><input type="radio" name="q4" value="a"> A) 2008</label>
+                <label><input type="radio" name="q4" value="b"> B) 2010</label>
+                <label><input type="radio" name="q4" value="c"> C) 2013</label>
+                <label><input type="radio" name="q4" value="d"> D) 2015</label>
+                <div id="feedback-q4"></div>
+            </div>
+
+            <div class="question-container">
+                <p>5. Onde a tecnologia BOOST é mais comumente aplicada?</p>
+                <label><input type="radio" name="q5" value="a"> A) No cabedal (parte superior) do tênis.</label>
+                <label><input type="radio" name="q5" value="b"> B) No solado externo.</label>
+                <label><input type="radio" name="q5" value="c"> C) Na entressola.</label>
+                <label><input type="radio" name="q5" value="d"> D) Nos cadarços.</label>
+                <div id="feedback-q5"></div>
+            </div>
+
+            <div class="question-container">
+                <p>6. Comparado a outros materiais de entressola, o BOOST é conhecido por:</p>
+                <label><input type="radio" name="q6" value="a"> A) Ser mais rígido e pesado.</label>
+                <label><input type="radio" name="q6" value="b"> B) Manter suas propriedades em diferentes temperaturas.</label>
+                <label><input type="radio" name="q6" value="c"> C) Se desgastar mais rapidamente.</label>
+                <label><input type="radio" name="q6" value="d"> D) Ser menos responsivo.</label>
+                <div id="feedback-q6"></div>
+            </div>
+
+            <div class="question-container">
+                <p>7. Qual o principal objetivo da Adidas ao criar a tecnologia BOOST?</p>
+                <label><input type="radio" name="q7" value="a"> A) Reduzir custos de produção.</label>
+                <label><input type="radio" name="q7" value="b"> B) Aumentar a durabilidade de todos os seus produtos.</label>
+                <label><input type="radio" name="q7" value="c"> C) Oferecer uma experiência de corrida mais confortável e eficiente.</label>
+                <label><input type="radio" name="q7" value="d"> D) Criar um design inovador para o solado.</label>
+                <div id="feedback-q7"></div>
+            </div>
+
+            <div class="question-container">
+                <p>8. Qual linha de tênis Adidas é famosa por popularizar o BOOST?</p>
+                <label><input type="radio" name="q8" value="a"> A) Adidas Gazelle</label>
+                <label><input type="radio" name="q8" value="b"> B) Adidas Superstar</label>
+                <label><input type="radio" name="q8" value="c"> C) Adidas UltraBoost</label>
+                <label><input type="radio" name="q8" value="d"> D) Adidas Stan Smith</label>
+                <div id="feedback-q8"></div>
+            </div>
+
+            <div class="question-container">
+                <p>9. A tecnologia BOOST é feita de milhares de pequenas:</p>
+                <label><input type="radio" name="q9" value="a"> A) Bolhas de ar</label>
+                <label><input type="radio" name="q9" value="b"> B) Microfibras de carbono</label>
+                <label><input type="radio" name="q9" value="c"> C) Cápsulas de poliuretano termoplástico (TPU) expandido</label>
+                <label><input type="radio" name="q9" value="d"> D) Placas de gel</label>
+                <div id="feedback-q9"></div>
+            </div>
+
+            <div class="question-container">
+                <p>10. Qual a sensação que o BOOST proporciona ao correr?</p>
+                <label><input type="radio" name="q10" value="a"> A) Firmeza e rigidez.</label>
+                <label><input type="radio" name="q10" value="b"> B) Leveza e ausência de amortecimento.</label>
+                <label><input type="radio" name="q10" value="c"> C) Maciez e alta responsividade.</label>
+                <label><input type="radio" name="q10" value="d"> D) Instabilidade.</label>
+                <div id="feedback-q10"></div>
+            </div>
+
+            <button type="submit" class="btn">Finalizar Simulação</button>
+        </form>
+        <button class="btn" onclick="goToBoostModule()">Voltar ao Módulo BOOST</button>
+        <button class="btn" id="masterAccessButtonQuiz" style="display:none;" onclick="goToMasterPage()">Acessar Área Master</button>
+    </div>
+
+    <div class="container" id="simulationResult">
+        <h2>Resultado da Simulação</h2>
+        <p id="resultText"></p>
+        <ul id="feedbackSummary"></ul>
+        <button class="btn" id="actionButton"></button>
+        <button class="btn" onclick="logout()">Sair / Trocar Usuário</button>
+        <button class="btn" id="masterAccessButtonResult" style="display:none;" onclick="goToMasterPage()">Acessar Área Master</button>
+    </div>
+
+    <div class="container" id="masterPage">
+        <h2>Área Master - Progresso do Treinamento</h2>
+        <ul id="masterResults">
+            <li>Nenhum resultado de simulação disponível ainda.</li>
+        </ul>
+        <button class="btn" onclick="goToBoostModule()">Voltar para os Módulos</button>
+        <button class="btn" onclick="logout()">Sair / Trocar Usuário</button>
+    </div>
+
+    <div class="container" id="simulacaoAtendimentoPage">
+        <h2>Treinar com ADI - Simulação de Atendimento</h2>
+        <p>Prepare-se para simular um atendimento real com o ADI!</p>
+        <p>Esta funcionalidade, com simulação de atendimento por voz e feedback personalizado, está **em desenvolvimento (backend)** e será liberada em breve.</p>
+        <p>Aguarde por novas atualizações para essa experiência de treinamento imersiva!</p>
+        <button class="btn" onclick="goToBoostModule()">Voltar ao Módulo BOOST</button>
+        <button class="btn" id="masterAccessButtonSimulacao" style="display:none;" onclick="goToMasterPage()">Acessar Área Master</button>
+    </div>
+
+    <script>
+        let currentUser = '';
+        let trainingResults = [];
+        const userCredentials = {
+            'diego': '3872',
+            'sebastiao': '9145',
+            'gustavo': '6028',
+            'gabryel': '2531',
+            'carla': '7960',
+            'igor': '4307',
+            'priscila': '8819',
+            'edna': '1754',
+            'jhovana': '5293',
+            'guilherme': '0486',
+            'leticia': '7123',
+            'kaylane': '9012',
+            'lucas': '3650',
+            'isabelli': '9876',
+            'gleice': '2109',
+            'gabriel': '1234',
+            'anderson': '5522',
+            'stella': '6384',
+            'jamilli': '0197',
+            'evelizze': '4039',
+            'yasmin': '8765',
+            'flavia': '7051',
+            'master': '4761'
+        };
+
+        const masterAccessUsers = ['master', 'lucas', 'diego', 'evelizze', 'yasmin', 'flavia'];
+
+        // RESPOSTAS E TEXTOS DO QUIZ BOOST (ORIGINAIS)
+        const correctAnswers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'c',
+            q6: 'b', q7: 'c', q8: 'c', q9: 'c', q10: 'c'
+        };
+        const answerTexts = {
+            q1: {a: 'Maior durabilidade da sola.', b: 'Excelente retorno de energia e amortecimento.', c: 'Redução significativa do peso do tênis.', d: 'Maior ventilação para os pés.'},
+            q2: {a: 'Borracha de alta densidade.', b: 'Espuma de EVA tradicional.', c: 'Pequenas cápsulas de TPU expandido.', d: 'Silicone líquido.'},
+            q3: {a: 'Superfície lisa e uniforme.', b: 'Aparência granulada, similar a isopor.', c: 'Cor sólida preta.', d: 'Textura de gel.'},
+            q4: {a: '2008', b: '2010', c: '2013', d: '2015'},
+            q5: {a: 'No cabedal (parte superior) do tênis.', b: 'No solado externo.', c: 'Na entressola.', d: 'Nos cadarços.'},
+            q6: {a: 'Ser mais rígido e pesado.', b: 'Manter suas propriedades em diferentes temperaturas.', c: 'Se desgastar mais rapidamente.', d: 'Ser menos responsivo.'},
+            q7: {a: 'Reduzir custos de produção.', b: 'Aumentar a durabilidade de todos os seus produtos.', c: 'Oferecer uma experiência de corrida mais confortável e eficiente.', d: 'Criar um design inovador para o solado.'},
+            q8: {a: 'Adidas Gazelle', b: 'Adidas Superstar', c: 'Adidas UltraBoost', d: 'Adidas Stan Smith'},
+            q9: {a: 'Bolhas de ar', b: 'Microfibras de carbono', c: 'Cápsulas de poliuretano termoplástico (TPU) expandido', d: 'Placas de gel'},
+            q10: {a: 'Firmeza e rigidez.', b: 'Leveza e ausência de amortecimento.', c: 'Maciez e alta responsividade.', d: 'Instabilidade.'}
+        };
+
+        // Função auxiliar para esconder todas as páginas
+        function hideAllPages() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('boostModule').style.display = 'none';
+            document.getElementById('supernovaModule').style.display = 'none';
+            document.getElementById('simulationModule').style.display = 'none';
+            document.getElementById('masterPage').style.display = 'none';
+            document.getElementById('simulationResult').style.display = 'none';
+            document.getElementById('simulacaoAtendimentoPage').style.display = 'none';
+        }
+
+        // Função auxiliar para mostrar botões da área master
+        function updateMasterAccessButtonsVisibility() {
+            const isMaster = masterAccessUsers.includes(currentUser);
+            document.getElementById('masterAccessButton').style.display = isMaster ? 'block' : 'none';
+            document.getElementById('masterAccessButtonSupernova').style.display = isMaster ? 'block' : 'none';
+            document.getElementById('masterAccessButtonQuiz').style.display = isMaster ? 'block' : 'none';
+            document.getElementById('masterAccessButtonResult').style.display = isMaster ? 'block' : 'none';
+            document.getElementById('masterAccessButtonSimulacao').style.display = isMaster ? 'block' : 'none';
+        }
+
+        function startTraining() {
+            const userNameInput = document.getElementById('userName');
+            const userPassInput = document.getElementById('userPass');
+            const enteredUser = userNameInput.value.trim().toLowerCase();
+            const enteredPass = userPassInput.value.trim();
+            
+            if (userCredentials[enteredUser] === enteredPass) {
+                currentUser = enteredUser;
+                hideAllPages();
+                document.getElementById('boostModule').style.display = 'block'; // Vai para o Módulo 1 (BOOST)
+                updateMasterAccessButtonsVisibility();
+                console.log(`Usuário logado: ${currentUser}`);
+            } else {
+                alert('Nome de usuário ou senha incorretos. Por favor, tente novamente.');
+            }
+            userNameInput.value = '';
+            userPassInput.value = '';
+        }
+
+        function startSimulation() { // Inicia o quiz do Módulo 1 (BOOST)
+            hideAllPages();
+            document.getElementById('simulationModule').style.display = 'block';
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('[id^="feedback-"]').forEach(el => el.textContent = '');
+            updateMasterAccessButtonsVisibility();
+        }
+
+        function goToMasterPage() {
+            hideAllPages();
+            document.getElementById('masterPage').style.display = 'block';
+            displayMasterResults();
+        }
+        
+        // Função para voltar para o Módulo 1 (BOOST) a partir de qualquer outra página
+        function goToBoostModule() {
+            hideAllPages();
+            document.getElementById('boostModule').style.display = 'block';
+            document.getElementById('quizForm').reset(); // Limpa o quiz se voltar
+            updateMasterAccessButtonsVisibility();
+        }
+
+        // Função para ir para o Módulo 2 (Supernova)
+        function goToSupernovaModule() {
+            hideAllPages();
+            document.getElementById('supernovaModule').style.display = 'block';
+            updateMasterAccessButtonsVisibility();
+        }
+
+        function goToSimulacaoAtendimentoPage() {
+            hideAllPages();
+            document.getElementById('simulacaoAtendimentoPage').style.display = 'block';
+            updateMasterAccessButtonsVisibility();
+        }
+
+        function logout() {
+            currentUser = '';
+            trainingResults = []; // Limpa os resultados ao deslogar para começar do zero em nova sessão
+            hideAllPages();
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('quizForm').reset();
+            updateMasterAccessButtonsVisibility(); // Garante que botões master sumam
+            console.log('Usuário deslogado.');
+        }
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let correctCount = 0;
+            let feedbackHtml = '';
+            const totalQuestions = 10;
+            let allAnswered = true;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${questionName}`);
+
+                if (!selectedOption) {
+                    allAnswered = false;
+                    break;
+                }
+
+                const userAnswer = selectedOption.value;
+                const correctAnswer = correctAnswers[questionName];
+
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                    feedbackDiv.innerHTML = `<span class="feedback-correct">Parabéns, você acertou!</span>`;
+                    feedbackHtml += `<li><strong>Pergunta ${i}:</strong> Você acertou! (${answerTexts[questionName][userAnswer]})</li>`;
+                } else {
+                    feedbackDiv.innerHTML = `<span class="feedback-incorrect">Incorreto. A resposta correta era: ${answerTexts[questionName][correctAnswer]}</span>`;
+                    feedbackHtml += `<li><strong>Pergunta ${i}:</strong> Você errou. A resposta correta era: ${answerTexts[questionName][correctAnswer]}</li>`;
+                }
+            }
+
+            if (!allAnswered) {
+                alert('Por favor, responda a todas as perguntas antes de finalizar.');
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById('simulationResult').style.display = 'block';
+
+            const resultTextElement = document.getElementById('resultText');
+            const actionButton = document.getElementById('actionButton');
+            const feedbackSummaryList = document.getElementById('feedbackSummary');
+
+            feedbackSummaryList.innerHTML = feedbackHtml;
+
+            let agentType = '';
+            let finalMessage = '';
+            let completedSuccessfully = false;
+
+            if (correctCount >= 8) {
+                agentType = 'Agente BOOST Master!';
+                finalMessage = `Parabéns, ${currentUser}! Você acertou ${correctCount} de ${totalQuestions} perguntas. Excelente conhecimento sobre a tecnologia BOOST!`;
+                completedSuccessfully = true;
+                actionButton.textContent = 'Voltar ao Módulo BOOST';
+                actionButton.onclick = goToBoostModule;
+            } else if (correctCount >= 6) {
+                agentType = 'Agente BOOST em Desenvolvimento.';
+                finalMessage = `Bom trabalho, ${currentUser}! Você acertou ${correctCount} de ${totalQuestions} perguntas. Continue revisando para se tornar um Agente BOOST completo.`;
+                completedSuccessfully = true;
+                actionButton.textContent = 'Voltar ao Módulo BOOST';
+                actionButton.onclick = goToBoostModule;
+            } else {
+                agentType = 'Agente BOOST Iniciante.';
+                finalMessage = `Olá, ${currentUser}. Você acertou ${correctCount} de ${totalQuestions} perguntas. É importante revisar o conteúdo do módulo BOOST e refazer a simulação.`;
+                completedSuccessfully = false;
+                actionButton.textContent = 'Refazer Simulação';
+                actionButton.onclick = startSimulation;
+            }
+
+            resultTextElement.innerHTML = `${finalMessage}<br><br>Seu status de Agente: <strong>${agentType}</strong>`;
+
+            trainingResults.push({
+                name: currentUser,
+                date: new Date().toLocaleString(),
+                score: correctCount,
+                agentType: agentType,
+                message: finalMessage,
+                completed: completedSuccessfully
+            });
+
+            console.log(`Usuário: ${currentUser}, Acertos: ${correctCount}/${totalQuestions}, Tipo de Agente: ${agentType}, Concluído: ${completedSuccessfully}`);
+            updateMasterAccessButtonsVisibility(); // Atualiza botões master após o resultado
+        });
+
+        function displayMasterResults() {
+            const masterResultsList = document.getElementById('masterResults');
+            masterResultsList.innerHTML = '';
+
+            if (trainingResults.length === 0) {
+                masterResultsList.innerHTML = '<li>Nenhum resultado de simulação disponível ainda.</li>';
+                return;
+            }
+
+            trainingResults.forEach(result => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <strong>Usuário:</strong> ${result.name.charAt(0).toUpperCase() + result.name.slice(1)}<br>
+                    <strong>Data:</strong> ${result.date}<br>
+                    <strong>Concluiu:</strong> ${result.completed ? '✅ Sim' : '🕒 Pendente (precisa refazer)'}<br>
+                    <strong>Pontuação:</strong> ${result.score} acertos de 10<br>
+                    <strong>Tipo de Agente:</strong> ${result.agentType}<br>
+                    <strong>Mensagem:</strong> ${result.message}
+                `;
+                masterResultsList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
